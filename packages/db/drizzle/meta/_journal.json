@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794509075268,
+      "tag": "0000_extensoes",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794509075999,
+      "tag": "0001_schema_inicial",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794509076744,
+      "tag": "0002_permissoes_ai_reader",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794656585021,
+      "tag": "0003_conversa_aberta_unica",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794658212916,
+      "tag": "0004_kb_writer_e_faq",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794964240063,
+      "tag": "0005_agent_messages",
+      "breakpoints": true
+    }
+  ]
+}

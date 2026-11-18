@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orla-config
+  namespace: orla
+data:
+  WEB_ORIGIN: 'http://127.0.0.1:3000'
+  REALTIME_PORT: '4000'
+  MESSAGE_STORE: 'mongo'
+  MONGODB_URL: 'mongodb://host.docker.internal:27017/orla'
+  AGENT_TOOLS_ENABLED: 'true'
+  OLLAMA_BASE_URL: 'http://host.docker.internal:11434'
+  AWS_ENDPOINT_URL: 'http://host.docker.internal:4566'
+  AWS_REGION: 'us-east-1'
+  EVENT_BUS_NAME: 'orla'

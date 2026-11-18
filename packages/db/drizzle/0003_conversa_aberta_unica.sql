@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "conversations_one_open_per_session_uq" ON "conversations" USING btree ("session_id") WHERE "conversations"."status" NOT IN ('closed', 'abandoned');

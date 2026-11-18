@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtime
+  namespace: orla
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realtime
+  template:
+    metadata:
+      labels:
+        app: realtime
+    spec:
+      containers:
+        - name: realtime
+          image: orla-realtime:dev
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - configMapRef:
+                name: orla-config
+            - secretRef:
+                name: orla-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: realtime
+  namespace: orla
+spec:
+  selector:
+    app: realtime
+  ports:
+    - port: 4000
+      targetPort: 4000

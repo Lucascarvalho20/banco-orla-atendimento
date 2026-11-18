@@ -1,0 +1,11 @@
+---
+description: Regras de segurança do Banco Orla (sempre ativas)
+alwaysApply: true
+---
+
+- Nunca escreva segredos em código, testes ou docs; use variáveis do `.env` validadas com Zod.
+- Nunca logue CPF, senha, token, cartão ou cookies.
+- Em `packages/ai`: a IA só recebe a pergunta + trechos públicos da base; não dê a ela acesso a
+  banco, rede ou ferramentas além das 4 do ADR 0008. Consulte a skill `llm-security`.
+- Texto de usuário/IA nunca vira HTML. Sem `dangerouslySetInnerHTML`, sem `eval`.
+- Antes de `git add`, confira `git status` e garanta que nenhum `.env` está entrando.

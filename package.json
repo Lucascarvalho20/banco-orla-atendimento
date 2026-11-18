@@ -1,0 +1,38 @@
+{
+  "name": "orla-atendimento",
+  "private": true,
+  "description": "Atendimento em tempo real do Banco Orla (fictício) com IA: respostas prontas, RAG com Llama e passagem para atendente humano.",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "db:migrate": "pnpm --filter @orla/db db:migrate",
+    "db:seed": "pnpm --filter @orla/db db:seed",
+    "eval:faq": "node evals/faq/calibrar.mjs",
+    "eval:busca": "node evals/rag/buscar.mjs",
+    "eval:rag": "node evals/rag/responder.mjs",
+    "kb:setup": "pnpm --filter @orla/ingest kb:setup",
+    "kb:upload": "pnpm --filter @orla/ingest kb:upload",
+    "kb:faq": "pnpm --filter @orla/ingest kb:faq",
+    "kb:status": "pnpm --filter @orla/ingest kb:status",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "kb:events": "pnpm --filter @orla/ingest kb:events"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.14.0",
+    "prettier": "^3.10.1",
+    "turbo": "^2.11.11",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,147 @@
+[
+  {
+    "pergunta": "fiz um pix e a pessoa diz que não chegou",
+    "fonte": "pix/problemas-com-pix.md",
+    "secao": "Pix enviado e não recebido"
+  },
+  {
+    "pergunta": "mandei pix pro número errado, consigo de volta?",
+    "fonte": "pix/problemas-com-pix.md",
+    "secao": "Pix enviado para a pessoa errada"
+  },
+  {
+    "pergunta": "como funciona o MED?",
+    "fonte": "pix/problemas-com-pix.md",
+    "secao": "Pix por golpe ou fraude: devolução (MED)"
+  },
+  {
+    "pergunta": "caí num golpe pelo pix, dá pra recuperar o dinheiro?",
+    "fonte": "pix/problemas-com-pix.md",
+    "secao": "Pix por golpe ou fraude: devolução (MED)",
+    "tambem": ["golpes/golpes-comuns.md"]
+  },
+  {
+    "pergunta": "minha chave diz que já está em outro banco",
+    "fonte": "pix/problemas-com-pix.md",
+    "secao": "Chave Pix já cadastrada em outro banco"
+  },
+  {
+    "pergunta": "qual o máximo que posso transferir durante o dia?",
+    "fonte": "pix/limites-e-horarios.md",
+    "secao": "Limite diurno e limite noturno"
+  },
+  {
+    "pergunta": "quero aumentar meu limite de transferência",
+    "fonte": "pix/limites-e-horarios.md",
+    "secao": "Como aumentar o limite"
+  },
+  {
+    "pergunta": "dá pra programar um pix pra semana que vem?",
+    "fonte": "pix/limites-e-horarios.md",
+    "secao": "Pix agendado"
+  },
+  {
+    "pergunta": "até que horas a TED cai no mesmo dia?",
+    "fonte": "pix/limites-e-horarios.md",
+    "secao": "TED e boleto"
+  },
+  {
+    "pergunta": "paguei um boleto e não compensou",
+    "fonte": "pix/limites-e-horarios.md",
+    "secao": "TED e boleto"
+  },
+  {
+    "pergunta": "errei a senha várias vezes e travou",
+    "fonte": "acesso/senha-e-app.md",
+    "secao": "Senha bloqueada"
+  },
+  {
+    "pergunta": "comprei um celular novo, como passo o app?",
+    "fonte": "acesso/senha-e-app.md",
+    "secao": "Troca de celular"
+  },
+  {
+    "pergunta": "o aplicativo fecha sozinho quando abro",
+    "fonte": "acesso/senha-e-app.md",
+    "secao": "O app não abre ou fecha sozinho"
+  },
+  {
+    "pergunta": "a digital não funciona para entrar",
+    "fonte": "acesso/senha-e-app.md",
+    "secao": "Biometria"
+  },
+  {
+    "pergunta": "tenho 16 anos, posso ter conta?",
+    "fonte": "cadastro/abertura-de-conta.md",
+    "secao": "Quem pode abrir conta"
+  },
+  {
+    "pergunta": "a foto do meu rosto foi recusada",
+    "fonte": "cadastro/abertura-de-conta.md",
+    "secao": "Selfie rejeitada"
+  },
+  {
+    "pergunta": "disseram que a foto do RG está ruim",
+    "fonte": "cadastro/abertura-de-conta.md",
+    "secao": "Documento ilegível"
+  },
+  {
+    "pergunta": "meu CPF aparece como pendente na Receita",
+    "fonte": "cadastro/abertura-de-conta.md",
+    "secao": "CPF irregular"
+  },
+  {
+    "pergunta": "mudei de casa, como atualizo o endereço?",
+    "fonte": "cadastro/abertura-de-conta.md",
+    "secao": "Atualizar endereço e dados"
+  },
+  {
+    "pergunta": "minha compra no mercado não passou no cartão",
+    "fonte": "cartao/cartao-credito-debito.md",
+    "secao": "Compra recusada"
+  },
+  {
+    "pergunta": "quando fecha e vence a fatura?",
+    "fonte": "cartao/cartao-credito-debito.md",
+    "secao": "Fatura"
+  },
+  {
+    "pergunta": "como gero um cartão pra comprar na internet?",
+    "fonte": "cartao/cartao-credito-debito.md",
+    "secao": "Cartão virtual"
+  },
+  {
+    "pergunta": "ligaram dizendo ser do banco pedindo o código que chegou por SMS",
+    "fonte": "golpes/golpes-comuns.md",
+    "secao": "Golpe do falso atendente ou falsa central"
+  },
+  {
+    "pergunta": "recebi mensagem de um parente pedindo dinheiro com número novo",
+    "fonte": "golpes/golpes-comuns.md",
+    "secao": "Golpe do falso parente"
+  },
+  {
+    "pergunta": "vocês vendem seguro de carro?",
+    "fonte": null
+  },
+  {
+    "pergunta": "qual a cotação do dólar hoje?",
+    "fonte": null
+  },
+  {
+    "pergunta": "quero fazer um empréstimo consignado",
+    "fonte": null
+  },
+  {
+    "pergunta": "onde fica a agência mais perto de mim?",
+    "fonte": null
+  },
+  {
+    "pergunta": "me passa uma receita de bolo de cenoura",
+    "fonte": null
+  },
+  {
+    "pergunta": "quanto rende a poupança este mês?",
+    "fonte": null
+  }
+]

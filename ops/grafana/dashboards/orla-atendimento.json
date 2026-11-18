@@ -1,0 +1,76 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Latência do assistente (p95)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(orla_assistant_latency_seconds_bucket[5m])) by (le, kind))",
+          "legendFormat": "{{kind}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s" },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Respostas da IA por tipo",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(rate(orla_assistant_answers_total[5m])) by (kind)",
+          "legendFormat": "{{kind}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Fila de atendentes (agora)",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [{ "expr": "orla_queue_depth", "legendFormat": "queued" }]
+    },
+    {
+      "type": "timeseries",
+      "title": "Mensagens por remetente",
+      "gridPos": { "h": 8, "w": 10, "x": 6, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(rate(orla_messages_total[5m])) by (sender)",
+          "legendFormat": "{{sender}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Guardas que bloquearam",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(rate(orla_guards_blocked_total[5m])) by (stage, kind)",
+          "legendFormat": "{{stage}}/{{kind}}"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": ["orla", "atendimento"],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "Banco Orla — Atendimento",
+  "uid": "orla-atendimento",
+  "version": 1
+}
