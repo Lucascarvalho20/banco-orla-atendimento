@@ -1,0 +1,33 @@
+{
+  "name": "@orla/ingest",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-lambda.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src scripts",
+    "test": "vitest run",
+    "kb:setup": "tsx scripts/setup.ts",
+    "kb:upload": "tsx scripts/upload.ts",
+    "kb:faq": "tsx scripts/faq.ts",
+    "kb:status": "tsx scripts/status.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-lambda": "^3.1169.0",
+    "@aws-sdk/client-s3": "^3.1169.0",
+    "@aws-sdk/client-sqs": "^3.1169.0",
+    "@orla/ai": "workspace:*",
+    "@orla/db": "workspace:*",
+    "@orla/shared": "workspace:*",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.164",
+    "@types/pg": "^8.23.1",
+    "esbuild": "^0.28.2",
+    "fflate": "^0.8.3",
+    "tsx": "^4.23.15"
+  }
+}

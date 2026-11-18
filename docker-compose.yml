@@ -1,0 +1,91 @@
+﻿# Sobe a infraestrutura local. O Ollama roda direto no Windows (usa a GPU), fora do Docker.
+#   docker compose up -d                 -> Postgres + pgvector + MiniStack (AWS local) (V1)
+#   docker compose --profile obs up -d   -> + Prometheus + Grafana (Etapa 9)
+#   docker compose --profile v2 up -d    -> + MongoDB e Redis (V2)
+name: orla
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?defina POSTGRES_USER no .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+      POSTGRES_DB: ${POSTGRES_DB:?defina POSTGRES_DB no .env}
+    ports:
+      - '127.0.0.1:${POSTGRES_PORT:-55432}:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # AWS emulada (ADR 0012): S3, SQS e Lambda da ingestão da base de conhecimento.
+  # Versão fixa (imagem de terceiro: revisar antes de atualizar). Sem docker.sock montado:
+  # a Lambda roda como processo Node dentro deste container, não controla o Docker da máquina.
+  ministack:
+    image: ministackorg/ministack:1.5.40
+    restart: unless-stopped
+    environment:
+      MINISTACK_REGION: us-east-1
+      LAMBDA_EXECUTOR: local
+    ports:
+      - '127.0.0.1:4566:4566'
+    extra_hosts:
+      # A Lambda chama o Ollama, que roda no Windows (fora do Docker)
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:8
+    profiles: ['v2']
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:27017:27017'
+    volumes:
+      - mongodata:/data/db
+
+  redis:
+    image: redis:8-alpine
+    profiles: ['v2']
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:6379:6379'
+
+  # Observabilidade (ADR 0013). O Prometheus raspia o realtime no host (host.docker.internal).
+  prometheus:
+    image: prom/prometheus:v3.4.2
+    profiles: ['obs']
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:9090:9090'
+    volumes:
+      - ./ops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  grafana:
+    image: grafana/grafana:12.0.2
+    profiles: ['obs']
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:3001:3000'
+    environment:
+      GF_SECURITY_ADMIN_USER: orla
+      GF_SECURITY_ADMIN_PASSWORD: orla-obs-local
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_USERS_DEFAULT_THEME: light
+    volumes:
+      - ./ops/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./ops/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+
+volumes:
+  pgdata:
+  mongodata:

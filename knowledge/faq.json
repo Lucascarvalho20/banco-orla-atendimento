@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "pix",
+    "question": "Qual é o limite do Pix à noite?",
+    "answer": "Das 20h às 6h, o limite padrão do Pix é de R$ 1.000 no total do período. Você pode mudar em Pix › Meus limites; aumentos valem depois de 24 horas."
+  },
+  {
+    "topic": "pix",
+    "question": "Como aumento meu limite do Pix?",
+    "answer": "No app, acesse Pix › Meus limites, escolha o período e o novo valor e confirme com a biometria. O aumento entra em vigor em 24 horas; a redução vale na hora."
+  },
+  {
+    "topic": "pix",
+    "question": "Fiz um Pix e o dinheiro não caiu na conta do recebedor",
+    "answer": "Abra o comprovante em Extrato e confira o status. Se estiver Concluído, o dinheiro saiu do Banco Orla: peça ao recebedor para verificar com o banco dele usando o ID da transação. Se estiver Em análise, pode levar até 30 minutos (ou até 72 horas à noite)."
+  },
+  {
+    "topic": "pix",
+    "question": "Mandei um Pix para a pessoa errada, como cancelo?",
+    "answer": "Um Pix concluído não pode ser cancelado pelo banco. Peça ao recebedor que use a opção Devolver Pix no app dele. Se foi golpe, use Pix › Contestar Pix (MED) o quanto antes."
+  },
+  {
+    "topic": "pix",
+    "question": "Caí num golpe pelo Pix, consigo o dinheiro de volta?",
+    "answer": "Conteste em Pix › Contestar Pix em até 80 dias e faça um boletim de ocorrência. O banco do recebedor tem até 7 dias para analisar; a devolução depende de ainda haver saldo na conta do golpista, por isso faça o quanto antes."
+  },
+  {
+    "topic": "pix",
+    "question": "Minha chave Pix está cadastrada em outro banco",
+    "answer": "Cadastre a chave em Pix › Minhas chaves; o app vai pedir a portabilidade. Confirme o pedido no app do outro banco em até 7 dias, senão ele expira."
+  },
+  {
+    "topic": "pix",
+    "question": "Qual o horário da TED?",
+    "answer": "A TED é enviada em dias úteis, das 6h30 às 17h. Fora desse horário ela fica agendada para o próximo dia útil."
+  },
+  {
+    "topic": "acesso",
+    "question": "Minha senha do app foi bloqueada",
+    "answer": "Na tela de entrada, toque em Esqueci minha senha, confirme com a selfie e o código por SMS e crie uma nova senha de 6 dígitos. O Banco Orla nunca pede sua senha por chat ou telefone."
+  },
+  {
+    "topic": "acesso",
+    "question": "Troquei de celular, como uso o app no aparelho novo?",
+    "answer": "Instale o app no celular novo, entre com CPF e senha e habilite o aparelho com selfie e código por SMS. Nas primeiras 24 horas, o limite do Pix fica em R$ 500 por dia, por segurança."
+  },
+  {
+    "topic": "acesso",
+    "question": "O aplicativo não abre",
+    "answer": "Atualize o app pela loja oficial e confira se o celular tem Android 10 ou iOS 15 ou superior. Celulares com root ou jailbreak não são aceitos. Se continuar, desinstale e instale de novo."
+  },
+  {
+    "topic": "cadastro",
+    "question": "Minha selfie foi rejeitada no cadastro",
+    "answer": "Tire a selfie num lugar bem iluminado, sem boné, óculos escuros ou máscara, com o rosto inteiro na moldura. Depois de 3 recusas, a análise fica manual e leva até 2 dias úteis."
+  },
+  {
+    "topic": "cadastro",
+    "question": "Como atualizo meu endereço?",
+    "answer": "Pelo app, em Perfil › Meus dados. A mudança de endereço vale na hora."
+  },
+  {
+    "topic": "cartao",
+    "question": "Por que minha compra no cartão foi recusada?",
+    "answer": "Confira o limite ou saldo em Cartão › Limite e se o cartão não está bloqueado no app. Compras fora do padrão podem ser barradas pelo antifraude: confirme a notificação no app e tente de novo em 5 minutos. Para compras online, use o cartão virtual."
+  },
+  {
+    "topic": "cartao",
+    "question": "Perdi meu cartão, o que faço?",
+    "answer": "Bloqueie o cartão definitivamente no app em Cartão › Bloquear. Um novo cartão é enviado sem custo em até 7 dias úteis, e o cartão virtual muda de número na hora."
+  },
+  {
+    "topic": "cartao",
+    "question": "Quando fecha a fatura do cartão?",
+    "answer": "A fatura fecha 7 dias antes do vencimento. Compras feitas depois do fechamento entram na fatura seguinte."
+  },
+  {
+    "topic": "cartao",
+    "question": "Como crio um cartão virtual?",
+    "answer": "Em Cartão › Cartão virtual. É gratuito e você pode criar quantos quiser, inclusive temporários que valem 24 horas — os mais seguros para sites desconhecidos."
+  },
+  {
+    "topic": "golpes",
+    "question": "Me ligaram dizendo ser do banco pedindo meus dados",
+    "answer": "É golpe. O Banco Orla nunca pede senha, código do token, código por SMS ou número completo do cartão, nem pede transferência para conta segura. Desligue e confira tudo pelo app."
+  },
+  {
+    "topic": "golpes",
+    "question": "Recebi um link por SMS pedindo para regularizar minha conta",
+    "answer": "Não clique: o Banco Orla não envia links por SMS ou WhatsApp para regularizar conta. Se você já digitou sua senha num site falso, troque a senha no app agora e bloqueie o cartão."
+  }
+]

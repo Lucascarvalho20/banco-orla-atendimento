@@ -1,0 +1,50 @@
+# Segredos (nunca vão para o Git)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+*.tfvars
+!*.tfvars.example
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Dependências e builds
+node_modules/
+.pnpm-store/
+dist/
+build/
+.next/
+out/
+.turbo/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs e dados locais
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.data/
+pgdata/
+
+# Testes E2E
+playwright-report/
+test-results/
+
+# Editor / SO
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Skill com licença restritiva (Semgrep Rules License): uso local, sem redistribuir
+.cursor/skills/llm-security/
+
+# Guia de estudo: repositorio privado separado (orla-atendimento-estudo), clonado nesta pasta
+docs/estudo/
