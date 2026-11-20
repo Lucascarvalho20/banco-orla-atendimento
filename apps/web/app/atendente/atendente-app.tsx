@@ -53,12 +53,19 @@ export function AtendenteApp() {
   }, []);
 
   const refreshDesk = useCallback(async (s: Socket) => {
-    const res = await s.emitWithAck('mesa:estado');
-    if (!res.ok) return;
-    setTeam(res.team);
-    setQueued(res.queued);
-    setActives(res.active);
-    setQueuedCount(res.queuedCount);
+    try {
+      const res = await s.timeout(8_000).emitWithAck('mesa:estado');
+      if (!res.ok) {
+        setError('Não foi possível carregar a mesa. Tente sair e entrar de novo.');
+        return;
+      }
+      setTeam(res.team);
+      setQueued(res.queued);
+      setActives(res.active);
+      setQueuedCount(res.queuedCount);
+    } catch {
+      setError('Conexão com a mesa falhou. Confira se o realtime está no ar.');
+    }
   }, []);
 
   const loadTeamChat = useCallback(async (s: Socket) => {
@@ -108,6 +115,14 @@ export function AtendenteApp() {
       withCredentials: true,
       transports: ['websocket'],
     });
+    s.on('connect', () => {
+      setError(null);
+      void refreshDesk(s);
+      void loadTeamChat(s);
+    });
+    s.on('connect_error', () => {
+      setError('Falha ao conectar na mesa (cookie/login). Saia e entre de novo.');
+    });
     s.on('fila:oferta', (item: AgentQueueItem) => setOffer(item));
     s.on('fila:oferta_expirada', () => setOffer(null));
     s.on('mensagem:nova', (m: ChatMessage) => setMessages((list) => [...list, m]));
@@ -116,19 +131,17 @@ export function AtendenteApp() {
     s.on('mesa:atualizada', () => void refreshDesk(s));
     setSocket(s);
     return s;
-  }, [apiUrl, refreshDesk]);
+  }, [apiUrl, refreshDesk, loadTeamChat]);
 
   useEffect(() => {
     if (!agent) return;
     const s = connectSocket();
-    void refreshDesk(s);
-    void loadTeamChat(s);
     const timer = setInterval(() => void refreshDesk(s), 8_000);
     return () => {
       clearInterval(timer);
       s.disconnect();
     };
-  }, [agent, connectSocket, refreshDesk, loadTeamChat]);
+  }, [agent, connectSocket, refreshDesk]);
 
   const setPresence = async (status: 'online' | 'offline') => {
     if (!socket) return;
@@ -465,7 +478,12 @@ export function AtendenteApp() {
                 </span>
               )}
             </header>
-            <ol className="flex max-h-80 flex-col gap-2 overflow-y-auto">
+            <ol className="flex max-h-[28rem] min-h-64 flex-col gap-2 overflow-y-auto scroll-smooth">
+              {messages.length === 0 && (
+                <li className="text-sm text-slate-500">
+                  Nenhuma mensagem nesta conversa (ou o histórico ainda não sincronizou).
+                </li>
+              )}
               {messages.map((m) => (
                 <li
                   key={m.seq}
@@ -577,6 +595,11 @@ export function AtendenteApp() {
                             preferencial
                           </span>
                         )}
+                        {c.status === 'offered' && (
+                          <span className="shrink-0 rounded bg-sky-100 px-1.5 py-0.5 text-[10px] text-sky-900">
+                            reservado
+                          </span>
+                        )}
                       </span>
                       <span className="shrink-0 text-xs text-slate-500">
                         {waitLabel(c.queuedAt, nowMs)}
@@ -589,6 +612,10 @@ export function AtendenteApp() {
                     </p>
                     <p>
                       <strong>CPF:</strong> •••-{c.cpfLast2}
+                    </p>
+                    <p>
+                      <strong>Status:</strong>{' '}
+                      {c.status === 'offered' ? 'Oferecido a um atendente (30 s)' : 'Na fila'}
                     </p>
                     <p>
                       <strong>Na fila há:</strong> {waitLabel(c.queuedAt, nowMs)}

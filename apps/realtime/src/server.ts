@@ -62,6 +62,8 @@ const events =
     : noopEventPublisher;
 
 const metrics = createMetrics();
+/** Preenchido depois do Socket.IO subir — avisa a mesa quando alguém entra na fila. */
+const desk = { notify: () => undefined as void };
 
 const llm = createOllamaChat({
   baseUrl: env.OLLAMA_BASE_URL,
@@ -113,6 +115,7 @@ const runAgent = env.AGENT_TOOLS_ENABLED
               position,
               at: new Date().toISOString(),
             });
+            desk.notify();
             return result.alreadyInQueue
               ? `A conversa já estava na fila (posição ~${position}).`
               : `Conversa enfileirada (posição ~${position}).`;
@@ -156,6 +159,9 @@ const app = await buildApp(env, {
   events,
   llm,
   messageStore: messages,
+  bindDeskNotify: (notify) => {
+    desk.notify = notify;
+  },
   sessions: {
     create: (data) => createCustomerSession(db, data),
     findActive: (id) => findActiveSession(db, id),
@@ -179,10 +185,13 @@ const app = await buildApp(env, {
       }),
     appendMessage: (input) =>
       env.MESSAGE_STORE === 'mongo' ? messages.append(input) : appendMessage(db, input),
-    listMessages: (conversationId, afterSeq) =>
-      env.MESSAGE_STORE === 'mongo'
-        ? messages.list(conversationId, afterSeq)
-        : listMessages(db, conversationId, afterSeq),
+    listMessages: async (conversationId, afterSeq) => {
+      if (env.MESSAGE_STORE !== 'mongo') return listMessages(db, conversationId, afterSeq);
+      const fromMongo = await messages.list(conversationId, afterSeq);
+      // Legado: conversas gravadas no Postgres antes da V2 — mesa não fica sem histórico.
+      if (fromMongo.length > 0) return fromMongo;
+      return listMessages(db, conversationId, afterSeq);
+    },
     isAiHandling: async (conversationId) =>
       (await getConversationStatus(db, conversationId)) === 'ai',
     enqueueForHuman: async (conversationId) => {
@@ -197,6 +206,7 @@ const app = await buildApp(env, {
         position,
         at: new Date().toISOString(),
       });
+      desk.notify();
       return { alreadyInQueue: result.alreadyInQueue, position, status: result.status };
     },
   },

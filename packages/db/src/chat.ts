@@ -49,7 +49,27 @@ export async function openConversation(
   };
 
   const existing = await findOpen();
-  if (existing) return { id: existing.id, created: false };
+  if (existing) {
+    // Mesma sessão aberta: se ainda está com a IA, troca o assunto pedido no formulário.
+    // Em fila/atendimento humano o tópico fica congelado (triagem já rolou).
+    const [open] = await db
+      .select({ id: conversations.id, status: conversations.status, topicId: conversations.topicId })
+      .from(conversations)
+      .where(eq(conversations.id, existing.id));
+    if (open?.status === 'ai') {
+      const [topic] = await db
+        .select({ id: topics.id })
+        .from(topics)
+        .where(eq(topics.slug, input.topic));
+      if (topic && topic.id !== open.topicId) {
+        await db
+          .update(conversations)
+          .set({ topicId: topic.id })
+          .where(and(eq(conversations.id, open.id), eq(conversations.status, 'ai')));
+      }
+    }
+    return { id: existing.id, created: false };
+  }
 
   const created = await db.transaction(async (tx) => {
     const [topic] = await tx

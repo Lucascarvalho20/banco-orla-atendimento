@@ -1,4 +1,4 @@
-import { and, asc, eq, lt, sql } from 'drizzle-orm';
+import { and, asc, eq, inArray, lt, sql } from 'drizzle-orm';
 import type { Database } from './client.js';
 import {
   agentStatus,
@@ -468,7 +468,10 @@ export async function listTeamPresence(db: Database): Promise<TeamMemberRow[]> {
   return rows;
 }
 
-/** Conversas na fila (pendentes), mais urgentes primeiro. */
+/**
+ * Pendências da mesa: `queued` e `offered`.
+ * Oferta (30 s) some da coluna se listarmos só `queued` — o supervisor perde o cartão.
+ */
 export async function listQueuedConversations(
   db: Database,
   limit = 30,
@@ -476,8 +479,12 @@ export async function listQueuedConversations(
   const rows = await db
     .select({ id: conversations.id })
     .from(conversations)
-    .where(eq(conversations.status, 'queued'))
-    .orderBy(sql`${conversations.priority} DESC NULLS FIRST`, asc(conversations.queuedAt))
+    .where(inArray(conversations.status, ['queued', 'offered']))
+    .orderBy(
+      sql`CASE ${conversations.status} WHEN 'offered' THEN 0 ELSE 1 END`,
+      sql`${conversations.priority} DESC NULLS FIRST`,
+      asc(conversations.queuedAt),
+    )
     .limit(limit);
   const out: QueueConversation[] = [];
   for (const r of rows) {

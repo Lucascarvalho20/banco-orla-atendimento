@@ -24,6 +24,8 @@ export interface AppDeps {
   events?: EventPublisher;
   llm?: LanguageModel;
   messageStore?: MessageStore;
+  /** Mesa: callback que dispara `mesa:atualizada` assim que o Socket.IO existe. */
+  bindDeskNotify?: (notify: () => void) => void;
 }
 
 export async function buildApp(env: Env, deps: AppDeps): Promise<FastifyInstance> {
@@ -99,6 +101,9 @@ export async function buildApp(env: Env, deps: AppDeps): Promise<FastifyInstance
       ...(deps.messageStore ? { messageStore: deps.messageStore } : {}),
     });
   }
+  deps.bindDeskNotify?.(() => {
+    io.of('/agent').to('equipe').emit('mesa:atualizada');
+  });
 
   return app;
 }

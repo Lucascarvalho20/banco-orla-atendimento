@@ -4,7 +4,13 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createDb, type Database } from './client.js';
 import { runMigrations } from './migrate.js';
 import { hashPassword, verifyPassword } from './passwords.js';
-import { acceptOffer, enqueueConversation, offerNextConversation, releaseOffer } from './queue.js';
+import {
+  acceptOffer,
+  enqueueConversation,
+  listQueuedConversations,
+  offerNextConversation,
+  releaseOffer,
+} from './queue.js';
 import { agentStatus, agents, conversations, customerSessions, topics } from './schema.js';
 import { seedTopics } from './seed.js';
 
@@ -137,5 +143,15 @@ describe('fila SKIP LOCKED (ADR 0004)', () => {
     const [id] = await createQueued(1);
     const second = await enqueueConversation(db, { conversationId: id!, summary: 'x' });
     expect(second).toEqual({ status: 'queued', alreadyInQueue: true });
+  });
+
+  it('mesa lista queued e offered (oferta não some da fila)', async () => {
+    const agentId = await createAgent('desk-list@test.example', 2);
+    await createQueued(1);
+    const offered = await offerNextConversation(db, agentId);
+    expect(offered).toBeTruthy();
+    // Limite alto: testes anteriores podem deixar dezenas de `offered` no mesmo container.
+    const pending = await listQueuedConversations(db, 200);
+    expect(pending.some((c) => c.id === offered!.id && c.status === 'offered')).toBe(true);
   });
 });

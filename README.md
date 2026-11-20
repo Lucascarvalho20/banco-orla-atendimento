@@ -107,6 +107,19 @@ Postgres real em container — o Docker precisa estar aberto).
 Avaliações da IA (precisam do Ollama e da base carregada): `pnpm eval:faq`, `pnpm eval:busca`
 (Recall@5 e MRR da busca) e `pnpm eval:rag` (respostas de ponta a ponta com o Llama).
 
+## Correções recentes (mesa / fila)
+
+Achados no teste manual da demo e já corrigidos no código:
+
+- Fila mostra também conversas **oferecidas** (`offered`), não só `queued` — o cartão não some no “Próxima”.
+- Histórico na mesa: se Mongo vier vazio, lê o legado no **Postgres** (V2 sem sumiço de mensagens).
+- Mesa atualiza na hora quando o cliente pede atendente (`mesa:atualizada`).
+- Troca de assunto enquanto a conversa ainda está com a IA atualiza o tópico de verdade.
+- Painel trata falha de socket/login em vez de ficar em silêncio.
+
+Conversas **não são apagadas** a cada refresh: o histórico fica no banco (como WhatsApp). O tempo
+“na fila há X min” conta desde o primeiro `queued_at`. Encerrar no painel fecha o atendimento.
+
 ## O que um recrutador pode perguntar
 
 | Tema                                                 | Resposta curta                                                                            |
@@ -114,6 +127,7 @@ Avaliações da IA (precisam do Ollama e da base carregada): `pnpm eval:faq`, `p
 | Por que RAG e não só o modelo?                       | O modelo inventa; a gente só responde com trecho recuperado e cita a fonte.               |
 | Como a fila evita duas pessoas pegarem o mesmo caso? | `FOR UPDATE SKIP LOCKED` + oferta com TTL.                                                |
 | Como a IA não vaza dados?                            | Sem acesso ao banco operacional; 4 ferramentas no máximo; guardas de entrada/saída no CI. |
+| Como valida CPF?                                     | Dígitos verificadores (Receita) no front e no back (Zod); no banco só HMAC + 2 dígitos.   |
 | AWS de verdade?                                      | SDK oficial contra MiniStack local (S3/SQS/Lambda/CloudWatch) — zero custo, mesmo código. |
 
 Mais trade-offs e escala (100 → 100 mil): [arquitetura-e-escala.md](docs/arquitetura-e-escala.md).
