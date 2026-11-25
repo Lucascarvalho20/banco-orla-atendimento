@@ -23,13 +23,13 @@
   "dependencies": {
     "@orla/shared": "workspace:*",
     "drizzle-orm": "^0.45.4",
-    "mongodb": "^6.22.0",
+    "mongodb": "^7.9.1",
     "pg": "^8.23.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@testcontainers/mongodb": "^12.2.1",
-    "@testcontainers/postgresql": "^12.2.1",
+    "@testcontainers/mongodb": "^12.2.2",
+    "@testcontainers/postgresql": "^12.2.2",
     "@types/pg": "^8.23.1",
     "drizzle-kit": "^0.31.11",
     "tsx": "^4.23.15"
